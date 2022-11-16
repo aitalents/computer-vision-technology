@@ -32,16 +32,16 @@
     2 неделя 23.11, 28.11
     Алгоритмы трекинга. Re-Identification. Sort, DeepSort…
 
-    3 неделя - Емельян 30.11, 5.12
+    3 неделя 30.11, 5.12
     Metric learning, Image Retrieval, Face recognition
 
-    4 неделя - Владимир 7.12, 12.12
+    4 неделя 7.12, 12.12
     3D CNN, Action recognition, Deep fake recognition
 
-    5 неделя - Александр 14.12, 19.12
+    5 неделя 14.12, 19.12
     OCR, Image captioning
 
-    6 неделя - Евгений 21.12, 26.12
+    6 неделя 21.12, 26.12
     Image generation, GAN, Stable Diffusion, High Resolution
 
     7 неделя
