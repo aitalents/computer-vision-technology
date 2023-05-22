@@ -39,15 +39,15 @@
     
     2 Object detection and Semantic Segmentation
     
-    3 Технологии работы с видео. ffmpeg, gstreamer, deepstream
-
-    4 Pose estimation
+    3 Pose estimation
     
-    5 Optical Character Recognition
+    4 Optical Character Recognition
 
-    6 Action recognition
+    5 Action recognition
 
-    7 Generative ML
+    6 Generative ML
+    
+    7 Технологии работы с видео. ffmpeg, gstreamer, deepstream
 
 
 ## Критерии оценки пройденных тем
