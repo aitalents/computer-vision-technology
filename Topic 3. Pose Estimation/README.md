@@ -1,6 +1,6 @@
 # Topic 3 - Pose estimataion
 
-Презентация https://docs.google.com/presentation/d/e/2PACX-1vSnufm8bg8aPNsMv2PkVOcUYvaee9e8YhtPhlzJOMCP75l-Q0k0TZaDXVSm2_ek5YOtVmsyOohp2yfU/pub?start=false&loop=false&delayms=60000
+[Презентация](https://docs.google.com/presentation/d/e/2PACX-1vSnufm8bg8aPNsMv2PkVOcUYvaee9e8YhtPhlzJOMCP75l-Q0k0TZaDXVSm2_ek5YOtVmsyOohp2yfU/pub?start=false&loop=false&delayms=60000)
 
 ## Домашнее задание
 
