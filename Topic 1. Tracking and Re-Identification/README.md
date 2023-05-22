@@ -1,4 +1,7 @@
 # Topic 1. Tracking. Re-Identification. Sort, DeepSort
+
+[Запись занятия](https://disk.yandex.ru/d/JHwZXroTqgW-HA/%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8%20CV/%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8%20CV_1_19_04.mp4)
+
 Студенту необходимо реализовать методы tracker_soft, tracker_strong и метод подсчета метрик, а также написать отчет. 
 Все подробности тут https://github.com/VABer-dv/object-tracking-assignment
 
