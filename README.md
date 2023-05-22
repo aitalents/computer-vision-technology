@@ -138,5 +138,5 @@
 - [Артур Идятов](https://github.com/electriclizard)
 - [Емельян Бурыкин](https://github.com/Emelian)
 - [Владислав Бережной](https://github.com/VABer-dv)
-- [Александр Бармин]()
+- [Александр Бармин](https://github.com/Alek-dr)
 - [Евгений Кириллов](https://github.com/Skyfallk)
