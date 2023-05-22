@@ -1,4 +1,7 @@
 # Topic 4. Optical Character Recognition
+
+[Запись занятия](https://disk.yandex.ru/d/JHwZXroTqgW-HA/%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8%20CV/%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8%20%C2%A0CV%20%D0%BE%D1%82%2017.05.mp4)
+
 Студенту необходимо реализовать архитектуру CRNN из [статьи](https://arxiv.org/abs/1507.05717).
 В качестве генератора датасета рекомендуется использовать файл репозитория Topic 5. OCR/dataset.py, однако можно 
 написать свой генератор капч или готовый датасет. 
