@@ -1,9 +1,5 @@
 # Topic 1. Tracking. Re-Identification. Sort, DeepSort
 
-[Запись занятия 1](https://drive.google.com/drive/folders/16pa0S0zVnCjAeIu6v6dsriX6Au3Wi3co)
-
-[Запись занятия 2](https://drive.google.com/drive/folders/16pa0S0zVnCjAeIu6v6dsriX6Au3Wi3co)
-
 [Презентация](https://docs.google.com/presentation/d/1s3qA_AtRBjtjC_KvSs41H59E3HU_Nx4DI795szEUdOQ/edit?usp=sharing)
 
 [Запись занятия 2023](https://disk.yandex.ru/d/JHwZXroTqgW-HA/%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8%20CV/%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8%20CV_1_19_04.mp4)
