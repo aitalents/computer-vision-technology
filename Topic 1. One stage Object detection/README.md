@@ -1,7 +1,5 @@
 # Topic 1. One Stage Object detection
 
-[Запись занятия]()
-
 Команде студентов необходимо реализовать и обучить модель YOLO первой версии, используя фреймворк pytorch, на датасете [COCO-2017](https://docs.voxel51.com/user_guide/dataset_zoo/datasets.html#dataset-zoo-coco-2017)
 
 Критерии оценки:
