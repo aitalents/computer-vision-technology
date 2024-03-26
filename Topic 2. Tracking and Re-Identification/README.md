@@ -1,4 +1,4 @@
-# Topic 1. Tracking. Re-Identification. Sort, DeepSort
+# Topic 2. Tracking. Re-Identification. Sort, DeepSort
 
 [Презентация](https://docs.google.com/presentation/d/1s3qA_AtRBjtjC_KvSs41H59E3HU_Nx4DI795szEUdOQ/edit?usp=sharing)
 
