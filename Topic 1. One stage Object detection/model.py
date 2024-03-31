@@ -14,11 +14,11 @@ class YOLOv1(nn.Module):
         self.num_bbox = 2
         self.input_size = img_size
         self.class_names = class_names
-        self.num_classes = len(class_names.keys())        
+        self.num_classes = len(class_names)        
         self.grid = grid_size
         self.output_size = self.grid * self.grid * (self.num_bbox * 5 + self.num_classes)
 
-        self.device = device
+        self.device = torch.device(device)
 
         self.eps = 1e-8 # for loss computation: small addition before get sqrt of w and h
 
@@ -63,7 +63,7 @@ class YOLOv1(nn.Module):
         actvs = self.extraction_layers(x)
         actvs = self.final_conv(actvs)
 
-        lin_input = torch.flatten(actvs)(batch_size, -1)
+        lin_input = torch.flatten(actvs).view(batch_size, -1)
         lin_out = self.linear_layers(lin_input)
         det_tensor = lin_out.view(-1, self.grid, self.grid, (self.num_bbox * 5) + self.num_classes)
 
@@ -101,7 +101,7 @@ class YOLOv1(nn.Module):
                     confidences = pred_bboxes[i, j, 4::5]
                     bbox_idx = torch.argmax(confidences)
                 
-                best_bboxes[i, j, :] = pred_bboxes[i, j, 5 * bbox_idx : 5 * (bbox_idx + 1)]
+                best_bboxes[i, j, :5] = pred_bboxes[i, j, 5 * bbox_idx : 5 * (bbox_idx + 1)]
 
         return best_bboxes
 
@@ -121,7 +121,8 @@ class YOLOv1(nn.Module):
 
             for j in range(self.grid):
                 for k in range(self.grid):
-                    gt_classes[j, k, target[i, j, k, 4]] = 1
+                    target_class = int(target[i, j, k, 4].detach())
+                    gt_classes[j, k, target_class] = 1
 
                     if target[i, j, k, :].sum() > 0: # case: there is gt bbox center in cell 
                         cell_loss = lambda_coord * torch.pow(best_bboxes[j, k, :2] - target[i, j, k, :2], 2).sum() + \
