@@ -20,6 +20,8 @@ class COCODetDataset(Dataset):
         self.coco = COCO(self.markup_json)
         self.img_ids = sorted(self.coco.getImgIds())
 
+        self.class_names, self.class_ids = self.get_class_names()
+
     def __len__(self):
         return len(self.img_ids)
     
@@ -42,7 +44,7 @@ class COCODetDataset(Dataset):
         for ann in anns:
             if 'bbox' in ann and 'category_id' in ann:
                 x_abs, y_abs, w_abs, h_abs = ann['bbox']
-                class_id = float(ann['category_id'] - 1)
+                class_id = float(self.class_ids.index(ann['category_id']))
                 x_c, y_c = (x_abs + w_abs * 0.5) / img_width, (y_abs + h_abs * 0.5) / img_height
                 w, h = w_abs / img_width, h_abs / img_height
 
@@ -63,6 +65,13 @@ class COCODetDataset(Dataset):
         gt_bboxes = self.get_gt_bboxes_whole_image(anns, img_markup)
 
         return img, gt_bboxes
+    
+    def get_class_names(self):
+        cat_info = self.coco.dataset['categories']
+        class_names = [class_info['name'] for class_info in cat_info]
+        class_ids = [class_info['id'] for class_info in cat_info]
+
+        return class_names, class_ids
     
 
 def batch_collate_fn(batch, grid_size=7):
