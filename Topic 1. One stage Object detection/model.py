@@ -69,7 +69,6 @@ class YOLOv1(nn.Module):
 
         return det_tensor
 
-
     def get_best_bboxes_from_predicted(self, pred, target):
         """
             Input:
@@ -105,7 +104,6 @@ class YOLOv1(nn.Module):
 
         return best_bboxes
 
-
     def compute_loss(
         self, model_output, target,
         lambda_coord=5, lambda_noobj=0.5,
@@ -140,3 +138,25 @@ class YOLOv1(nn.Module):
         mean_batch_loss = batch_loss / model_output.size()[0]
 
         return mean_batch_loss
+    
+    def convert_preds_to_bboxes_list(self, model_out):
+        """
+        Returns list of lists with predicted bboxes for all images in batch.
+        Bboxes in format (x_center, y_center, w, h, confidence, class_id).
+        """
+        batch_size = model_out.size()[0]
+        res_bboxes = []
+
+        for i in range(batch_size):
+            img_bboxes = []
+
+            for j in range(self.grid):
+                for k in range(self.grid):
+                    class_id = torch.argmax(model_out[i, j, k, -self.num_classes:]).item()
+                    img_bboxes.extend(
+                        [[*model_out[i, j, k, 5*t:5*(t + 1)].tolist(), class_id] for t in range(self.num_bbox)]
+                    )
+
+            res_bboxes.append(img_bboxes)
+
+        return res_bboxes

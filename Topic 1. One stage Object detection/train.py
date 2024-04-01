@@ -9,6 +9,7 @@ import torch.optim as optim
 
 from dataset import COCODetDataset, batch_collate_fn
 from model import YOLOv1
+from utils import nms, render_pred_bboxes
 
 
 def evaluate(model, dataloader, epoch):
@@ -30,6 +31,19 @@ def evaluate(model, dataloader, epoch):
     val_loss /= len(dataloader)
 
     return val_loss
+
+
+def show_pred_example(model, img, conf_thr, iou_thr):
+    model.eval()
+
+    model_out = model(img)
+    pred_boxes = model.convert_preds_to_bboxes_list(model_out)[0]
+    nms_boxes = nms(pred_boxes, model.num_classes, iou_thr=iou_thr)
+    
+    final_boxes = [box for box in nms_boxes if box[5] >= conf_thr]
+    rendered_img = render_pred_bboxes(img[0, :, :, :], final_boxes)
+
+    return rendered_img
 
 
 def train(args):
@@ -97,6 +111,9 @@ def train(args):
             torch.save(model.state_dict(), f"./yolo_v1_model_{epoch}_epoch.pth")
             min_val_loss = val_loss
 
+        first_val_img, _ = val_dataset[0]
+        show_pred_example(model, first_val_img[None, :, :, :], args.conf_thres, args.iou_thres)
+
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='YOLOv1 train pipeline')
@@ -107,6 +124,8 @@ if __name__ == '__main__':
     parser.add_argument('--device', type=str, default='cpu', help='Use device: `cuda` or `cpu`')
     parser.add_argument('--epochs', type=int, default=20)
     parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--iou_thres', type=float, default=0.45, help='NMS IoU threshold')
+    parser.add_argument('--conf_thres', type=float, default=0.25, help='Confidence threshold')
 
     args = parser.parse_args()
 
