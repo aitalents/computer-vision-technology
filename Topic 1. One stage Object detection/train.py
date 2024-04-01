@@ -1,12 +1,35 @@
 from argparse import ArgumentParser
 import os
 import time
+from tqdm import tqdm
 
 import torch
 from torch.utils.data import DataLoader
+import torch.optim as optim
 
 from dataset import COCODetDataset, batch_collate_fn
 from model import YOLOv1
+
+
+def evaluate(model, dataloader, epoch):
+    model.eval()
+    val_loss = 0.0
+
+    with torch.no_grad():
+
+        for batch in tqdm(dataloader, total=len(dataloader), desc=f'Epoch #{epoch}: val'):
+            imgs, dets = batch
+            imgs = imgs.to(model.device)
+            dets = dets.to(model.device)
+
+            pred = model(imgs)
+            batch_loss = model.compute_loss(pred, dets)
+
+            val_loss += batch_loss.item()
+
+    val_loss /= len(dataloader)
+
+    return val_loss
 
 
 def train(args):
@@ -34,6 +57,14 @@ def train(args):
         (args.imgsz, args.imgsz), args.device,
     )
     device = model.device
+    model.to(device)
+
+    optimizer = optim.Adam(
+        model.parameters(), lr=2e-5, weight_decay=0
+    )
+    optimizer.zero_grad()
+
+    min_val_loss = None
 
     for epoch in range(args.epochs):
         print(f'Epoch {epoch+1}/{args.epochs}')
@@ -42,24 +73,29 @@ def train(args):
 
         model.train()
 
-        for idx, batch in enumerate(train_loader):
-            if idx < 1:
-                imgs, dets = batch
-                imgs = imgs.to(device)
-                dets = dets.to(device)
+        for batch in tqdm(train_loader, total=len(train_loader), desc=f'Epoch #{epoch}: train'):
+            optimizer.zero_grad()
+                
+            imgs, dets = batch
+            imgs = imgs.to(device)
+            dets = dets.to(device)
 
-                model_out = model(imgs)
-                batch_loss = model.compute_loss(model_out, dets)
+            model_out = model(imgs)
+            batch_loss = model.compute_loss(model_out, dets)
+            epoch_loss += batch_loss.item()
 
-                batch_loss.backward()
-                epoch_loss += batch_loss.item()
+            batch_loss.backward()
+            optimizer.step()
 
         epoch_loss /= len(train_loader)
-        epoch_time = time.time() - epoch_start_time
-        print(f'Avg epoch loss: {epoch_loss:.3f}, took {epoch_time / (60 * 60):.3f} hours')
+        val_loss = evaluate(model, val_loader, epoch)
 
-        if epoch % 10 == 0:
+        epoch_time = time.time() - epoch_start_time
+        print(f'Avg train loss: {epoch_loss:.3f}, avg val loss: {val_loss:.3f},  took {epoch_time / (60 * 60):.3f} hours')
+
+        if min_val_loss is None or val_loss <= min_val_loss:
             torch.save(model.state_dict(), f"./yolo_v1_model_{epoch}_epoch.pth")
+            min_val_loss = val_loss
 
 
 if __name__ == '__main__':
