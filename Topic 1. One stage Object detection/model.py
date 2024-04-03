@@ -85,7 +85,7 @@ class YOLOv1(nn.Module):
         pred_bboxes = pred[:, :, :self.num_bbox * 5]
         pred_classes = pred[:, :, self.num_bbox * 5:]
 
-        best_bboxes = torch.zeros((self.grid, self.grid, 5 + self.num_classes))
+        best_bboxes = torch.zeros((self.grid, self.grid, 5 + self.num_classes)).to(pred.device)
         best_bboxes[:, :, 5:] = pred_classes
 
         for i in range(self.grid):

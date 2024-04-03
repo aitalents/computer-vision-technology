@@ -19,7 +19,7 @@ def compute_pairwise_iou(bboxes1, bboxes2):
     area1 = bboxes1[:, 2] * bboxes1[:, 3]
     area2 = bboxes2[:, 2] * bboxes2[:, 3]
 
-    zero = torch.zeros(x_min_1.size())
+    zero = torch.zeros(x_min_1.size()).to(x_min_1.device)
 
     inter_width = torch.max(zero, torch.min(x_max_1, x_max_2) - torch.max(x_min_1,x_min_2))
     inter_height = torch.max(zero, torch.min(y_max_1, y_max_2) - torch.max(y_min_1,y_min_2))
