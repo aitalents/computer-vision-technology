@@ -9,12 +9,15 @@ import torch.optim as optim
 
 from dataset import COCODetDataset, batch_collate_fn
 from model import YOLOv1
-from utils import nms, render_pred_bboxes
+from utils import nms, render_pred_bboxes, compute_map
 
 
-def evaluate(model, dataloader, epoch):
+def evaluate(model, dataloader, dataset, epoch):
     model.eval()
     val_loss = 0.0
+
+    preds, gts = [], []
+    img_id = 0
 
     with torch.no_grad():
 
@@ -28,9 +31,20 @@ def evaluate(model, dataloader, epoch):
 
             val_loss += batch_loss.item()
 
-    val_loss /= len(dataloader)
+            pred_arr = model.convert_preds_to_bboxes_list(pred)
+            processed_preds = [nms(pred_boxes, model.num_classes) for pred_boxes in pred_arr]
 
-    return val_loss
+            for boxes in processed_preds:
+                preds.extend([[*box, img_id] for box in boxes])
+                img_id += 1
+
+    for i, (_, gt) in enumerate(dataset):
+        gts.extend([[*box, i] for box in gt])
+
+    val_loss /= len(dataloader)
+    val_map = compute_map(preds, gts, model.num_classes)
+
+    return val_loss, val_map
 
 
 def show_pred_example(model, img, conf_thr, iou_thr):
@@ -102,10 +116,10 @@ def train(args):
             optimizer.step()
 
         epoch_loss /= len(train_loader)
-        val_loss = evaluate(model, val_loader, epoch)
+        val_loss, val_map = evaluate(model, val_loader, val_dataset, epoch)
 
         epoch_time = time.time() - epoch_start_time
-        print(f'Avg train loss: {epoch_loss:.3f}, avg val loss: {val_loss:.3f},  took {epoch_time / (60 * 60):.3f} hours')
+        print(f'Avg train loss: {epoch_loss:.3f}, avg val loss: {val_loss:.3f}, val mAP: {val_map:.3f},  took {epoch_time / (60 * 60):.3f} hours')
 
         if min_val_loss is None or val_loss <= min_val_loss:
             torch.save(model.state_dict(), f"./yolo_v1_model_{epoch}_epoch.pth")

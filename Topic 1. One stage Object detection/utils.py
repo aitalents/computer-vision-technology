@@ -1,3 +1,4 @@
+import numpy as np
 from PIL import ImageDraw
 import torch
 from torchvision.transforms import ToPILImage
@@ -75,3 +76,52 @@ def render_pred_bboxes(img, pred_bboxes):
     img.show()
 
     return img
+
+
+def compute_map(preds, gts, num_classes, iou_thr=0.5, eps=1e-6):
+    """
+    Input:
+        preds -- list of predictions in format (x_center, y_center, w, h, confidence, class_id, img_id)
+        gts -- list of gt boxes in format (x_center, y_center, w, h, class_id, img_id)
+    Returns: value of mAP
+    """
+    ap_values = []
+
+    for cls in range(num_classes):
+        cls_preds = [pred for pred in preds if pred[5] == cls]
+        cls_gts = [gt for gt in gts if gt[4] == cls]
+
+        tp_values = torch.zeros(len(cls_preds))
+        fp_values = torch.zeros(len(cls_preds))
+
+        dets = sorted(cls_preds, key=lambda x: x[5], reverse=True)
+
+        for i, det in enumerate(dets):
+            img_id = det[-1]
+            img_gts = [gt[:4] for gt in cls_gts if gt[-1] == img_id]
+
+            if len(img_gts):
+                ious = compute_pairwise_iou(
+                    torch.tensor(img_gts).reshape((-1, 4)),
+                    torch.tensor(det[:4]).reshape((1, 4)),
+                )
+                max_iou = torch.max(ious)
+
+                if max_iou >= iou_thr:
+                    tp_values[i] = 1
+                else:
+                    fp_values[i] = 1
+
+        cum_tp = torch.cumsum(tp_values, dim=0)
+        cum_fp = torch.cumsum(fp_values, dim=0)
+
+        recall_vals = cum_tp / (len(cls_gts) + eps)
+        recall_vals = torch.cat((torch.tensor([0]), recall_vals))
+        precision_vals = torch.divide(cum_tp, (cum_tp + cum_fp + eps))    
+        precision_vals = torch.cat((torch.tensor([1]), precision_vals))
+
+        ap = torch.trapezoid(precision_vals, recall_vals)
+
+        ap_values.append(ap)
+
+    return sum(ap_values) / len(ap_values)
