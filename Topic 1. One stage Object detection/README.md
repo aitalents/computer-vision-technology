@@ -58,5 +58,8 @@ dataset
     └── labels.json
 ```
 
-
+# Запускаем обучение
+```
+python train.py --data_folder ./dataset --device cuda --batch_size 2 
+```
 
