@@ -73,8 +73,6 @@ def render_pred_bboxes(img, pred_bboxes):
         img1.rectangle(rect_coords, outline ="green")
         img1.text(rect_coords[0], f'cl:{class_id},conf:{conf:.2f}', (0,255,0))
 
-    img.show()
-
     return img
 
 
