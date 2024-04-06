@@ -91,3 +91,6 @@
 - [Артур Идятов](https://github.com/electriclizard)
 - [Емельян Бурыкин](https://github.com/Emelian)
 - [Владислав Бережной](https://github.com/VABer-dv)
+- [Владимир Штурмин]()
+- [Артём Просветов]()
+- [Андрей Попов](https://github.com/traptrip)
