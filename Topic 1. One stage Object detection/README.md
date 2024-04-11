@@ -60,6 +60,6 @@ dataset
 
 # Запускаем обучение
 ```
-python train.py --data_folder ./dataset --device cuda --batch_size 2 
+python train.py --data_folder ./data/dataset_subset --device cuda --batch_size 2 --epochs 40
 ```
 
