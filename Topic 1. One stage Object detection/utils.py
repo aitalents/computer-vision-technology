@@ -1,3 +1,4 @@
+import logging
 import numpy as np
 from PIL import ImageDraw
 import torch
@@ -123,3 +124,33 @@ def compute_map(preds, gts, num_classes, iou_thr=0.5, eps=1e-6):
         ap_values.append(ap)
 
     return sum(ap_values) / len(ap_values)
+
+def create_logger(logger_name, log_file_path):
+    """Create a logger with a file handler.
+
+    This function sets up a logger with a file handler that formats log messages
+    to include the timestamp and the log message itself. The logger
+    is configured to log messages with a severity level of INFO or higher.
+
+    Parameters
+    ----------
+    logger_name : str
+        The name of the logger. This is used to retrieve or create a logger
+        instance.
+    log_file_path : str
+        The path to the log file where the log messages will be written.
+
+    Returns
+    -------
+    logger : logging.Logger
+        A logger instance configured with the specified name and file handler.
+    """
+    logger = logging.getLogger(logger_name)
+
+    file_handler = logging.FileHandler(log_file_path, "w")
+    formatter = logging.Formatter("%(asctime)s - %(message)s")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    logger.setLevel(logging.INFO)
+    return logger
