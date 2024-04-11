@@ -1,0 +1,125 @@
+2024-04-11 22:10:05,496 - Epoch 1/40
+2024-04-11 22:10:49,452 - Avg train loss: 181.755, avg val loss: 158.387, val mAP: 0.001,  took 0.012 hours
+2024-04-11 22:10:49,453 - Save new best weights to yolov1_train_22:10:01/weights/yolo_v1_model_0_epoch.pth
+2024-04-11 22:10:51,925 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_0_epoch.jpg
+2024-04-11 22:10:51,926 - Epoch 2/40
+2024-04-11 22:11:35,804 - Avg train loss: 180.049, avg val loss: 175.196, val mAP: 0.001,  took 0.012 hours
+2024-04-11 22:11:35,849 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_1_epoch.jpg
+2024-04-11 22:11:35,849 - Epoch 3/40
+2024-04-11 22:12:19,864 - Avg train loss: 178.415, avg val loss: 192.073, val mAP: 0.000,  took 0.012 hours
+2024-04-11 22:12:19,913 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_2_epoch.jpg
+2024-04-11 22:12:19,914 - Epoch 4/40
+2024-04-11 22:13:04,050 - Avg train loss: 177.746, avg val loss: 187.548, val mAP: 0.000,  took 0.012 hours
+2024-04-11 22:13:04,096 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_3_epoch.jpg
+2024-04-11 22:13:04,097 - Epoch 5/40
+2024-04-11 22:13:48,625 - Avg train loss: 177.209, avg val loss: 182.818, val mAP: 0.000,  took 0.012 hours
+2024-04-11 22:13:48,668 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_4_epoch.jpg
+2024-04-11 22:13:48,668 - Epoch 6/40
+2024-04-11 22:14:33,743 - Avg train loss: 174.657, avg val loss: 167.237, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:14:33,787 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_5_epoch.jpg
+2024-04-11 22:14:33,788 - Epoch 7/40
+2024-04-11 22:15:19,972 - Avg train loss: 172.605, avg val loss: 172.382, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:15:20,016 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_6_epoch.jpg
+2024-04-11 22:15:20,017 - Epoch 8/40
+2024-04-11 22:16:04,794 - Avg train loss: 171.781, avg val loss: 168.015, val mAP: 0.000,  took 0.012 hours
+2024-04-11 22:16:04,836 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_7_epoch.jpg
+2024-04-11 22:16:04,837 - Epoch 9/40
+2024-04-11 22:16:49,980 - Avg train loss: 168.452, avg val loss: 161.608, val mAP: 0.008,  took 0.013 hours
+2024-04-11 22:16:50,025 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_8_epoch.jpg
+2024-04-11 22:16:50,026 - Epoch 10/40
+2024-04-11 22:17:35,827 - Avg train loss: 165.547, avg val loss: 170.009, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:17:35,870 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_9_epoch.jpg
+2024-04-11 22:17:35,871 - Epoch 11/40
+2024-04-11 22:18:21,782 - Avg train loss: 166.316, avg val loss: 184.107, val mAP: 0.001,  took 0.013 hours
+2024-04-11 22:18:21,826 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_10_epoch.jpg
+2024-04-11 22:18:21,827 - Epoch 12/40
+2024-04-11 22:19:07,054 - Avg train loss: 164.011, avg val loss: 175.680, val mAP: 0.007,  took 0.013 hours
+2024-04-11 22:19:07,097 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_11_epoch.jpg
+2024-04-11 22:19:07,098 - Epoch 13/40
+2024-04-11 22:19:53,558 - Avg train loss: 162.710, avg val loss: 161.376, val mAP: 0.007,  took 0.013 hours
+2024-04-11 22:19:53,600 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_12_epoch.jpg
+2024-04-11 22:19:53,601 - Epoch 14/40
+2024-04-11 22:20:38,341 - Avg train loss: 162.444, avg val loss: 172.373, val mAP: 0.007,  took 0.012 hours
+2024-04-11 22:20:38,386 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_13_epoch.jpg
+2024-04-11 22:20:38,386 - Epoch 15/40
+2024-04-11 22:21:24,064 - Avg train loss: 164.911, avg val loss: 180.710, val mAP: 0.002,  took 0.013 hours
+2024-04-11 22:21:24,109 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_14_epoch.jpg
+2024-04-11 22:21:24,110 - Epoch 16/40
+2024-04-11 22:22:09,977 - Avg train loss: 164.145, avg val loss: 164.220, val mAP: 0.005,  took 0.013 hours
+2024-04-11 22:22:10,022 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_15_epoch.jpg
+2024-04-11 22:22:10,023 - Epoch 17/40
+2024-04-11 22:22:55,020 - Avg train loss: 161.315, avg val loss: 177.012, val mAP: 0.002,  took 0.012 hours
+2024-04-11 22:22:55,067 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_16_epoch.jpg
+2024-04-11 22:22:55,067 - Epoch 18/40
+2024-04-11 22:23:41,067 - Avg train loss: 162.012, avg val loss: 185.950, val mAP: 0.001,  took 0.013 hours
+2024-04-11 22:23:41,111 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_17_epoch.jpg
+2024-04-11 22:23:41,112 - Epoch 19/40
+2024-04-11 22:24:25,874 - Avg train loss: 163.854, avg val loss: 184.400, val mAP: 0.003,  took 0.012 hours
+2024-04-11 22:24:25,917 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_18_epoch.jpg
+2024-04-11 22:24:25,918 - Epoch 20/40
+2024-04-11 22:25:12,042 - Avg train loss: 161.983, avg val loss: 178.343, val mAP: 0.002,  took 0.013 hours
+2024-04-11 22:25:12,085 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_19_epoch.jpg
+2024-04-11 22:25:12,086 - Epoch 21/40
+2024-04-11 22:25:57,662 - Avg train loss: 162.553, avg val loss: 156.230, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:25:57,663 - Save new best weights to yolov1_train_22:10:01/weights/yolo_v1_model_20_epoch.pth
+2024-04-11 22:26:00,179 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_20_epoch.jpg
+2024-04-11 22:26:00,180 - Epoch 22/40
+2024-04-11 22:26:44,974 - Avg train loss: 159.679, avg val loss: 167.352, val mAP: 0.000,  took 0.012 hours
+2024-04-11 22:26:45,016 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_21_epoch.jpg
+2024-04-11 22:26:45,017 - Epoch 23/40
+2024-04-11 22:27:30,682 - Avg train loss: 160.227, avg val loss: 160.242, val mAP: 0.001,  took 0.013 hours
+2024-04-11 22:27:30,729 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_22_epoch.jpg
+2024-04-11 22:27:30,729 - Epoch 24/40
+2024-04-11 22:28:17,769 - Avg train loss: 160.410, avg val loss: 168.389, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:28:17,813 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_23_epoch.jpg
+2024-04-11 22:28:17,814 - Epoch 25/40
+2024-04-11 22:29:02,408 - Avg train loss: 157.027, avg val loss: 148.934, val mAP: 0.000,  took 0.012 hours
+2024-04-11 22:29:02,408 - Save new best weights to yolov1_train_22:10:01/weights/yolo_v1_model_24_epoch.pth
+2024-04-11 22:29:04,885 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_24_epoch.jpg
+2024-04-11 22:29:04,885 - Epoch 26/40
+2024-04-11 22:29:51,322 - Avg train loss: 155.655, avg val loss: 147.400, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:29:51,322 - Save new best weights to yolov1_train_22:10:01/weights/yolo_v1_model_25_epoch.pth
+2024-04-11 22:29:53,756 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_25_epoch.jpg
+2024-04-11 22:29:53,757 - Epoch 27/40
+2024-04-11 22:30:38,586 - Avg train loss: 152.920, avg val loss: 152.225, val mAP: 0.011,  took 0.012 hours
+2024-04-11 22:30:38,628 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_26_epoch.jpg
+2024-04-11 22:30:38,629 - Epoch 28/40
+2024-04-11 22:31:25,347 - Avg train loss: 154.793, avg val loss: 177.078, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:31:25,391 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_27_epoch.jpg
+2024-04-11 22:31:25,392 - Epoch 29/40
+2024-04-11 22:32:10,392 - Avg train loss: 151.457, avg val loss: 154.350, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:32:10,435 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_28_epoch.jpg
+2024-04-11 22:32:10,436 - Epoch 30/40
+2024-04-11 22:32:55,780 - Avg train loss: 152.421, avg val loss: 157.685, val mAP: 0.004,  took 0.013 hours
+2024-04-11 22:32:55,824 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_29_epoch.jpg
+2024-04-11 22:32:55,825 - Epoch 31/40
+2024-04-11 22:33:41,164 - Avg train loss: 150.469, avg val loss: 150.180, val mAP: 0.001,  took 0.013 hours
+2024-04-11 22:33:41,207 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_30_epoch.jpg
+2024-04-11 22:33:41,208 - Epoch 32/40
+2024-04-11 22:34:27,309 - Avg train loss: 152.868, avg val loss: 149.945, val mAP: 0.001,  took 0.013 hours
+2024-04-11 22:34:27,351 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_31_epoch.jpg
+2024-04-11 22:34:27,352 - Epoch 33/40
+2024-04-11 22:35:12,701 - Avg train loss: 150.245, avg val loss: 136.486, val mAP: 0.001,  took 0.013 hours
+2024-04-11 22:35:12,702 - Save new best weights to yolov1_train_22:10:01/weights/yolo_v1_model_32_epoch.pth
+2024-04-11 22:35:15,179 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_32_epoch.jpg
+2024-04-11 22:35:15,180 - Epoch 34/40
+2024-04-11 22:36:00,469 - Avg train loss: 149.748, avg val loss: 150.232, val mAP: 0.004,  took 0.013 hours
+2024-04-11 22:36:00,511 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_33_epoch.jpg
+2024-04-11 22:36:00,512 - Epoch 35/40
+2024-04-11 22:36:46,751 - Avg train loss: 153.505, avg val loss: 157.850, val mAP: 0.002,  took 0.013 hours
+2024-04-11 22:36:46,797 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_34_epoch.jpg
+2024-04-11 22:36:46,798 - Epoch 36/40
+2024-04-11 22:37:31,907 - Avg train loss: 149.913, avg val loss: 139.750, val mAP: 0.003,  took 0.013 hours
+2024-04-11 22:37:31,953 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_35_epoch.jpg
+2024-04-11 22:37:31,954 - Epoch 37/40
+2024-04-11 22:38:17,285 - Avg train loss: 150.527, avg val loss: 148.690, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:38:17,327 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_36_epoch.jpg
+2024-04-11 22:38:17,328 - Epoch 38/40
+2024-04-11 22:39:02,833 - Avg train loss: 149.078, avg val loss: 149.567, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:39:02,880 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_37_epoch.jpg
+2024-04-11 22:39:02,881 - Epoch 39/40
+2024-04-11 22:39:48,258 - Avg train loss: 145.570, avg val loss: 138.732, val mAP: 0.001,  took 0.013 hours
+2024-04-11 22:39:48,303 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_38_epoch.jpg
+2024-04-11 22:39:48,303 - Epoch 40/40
+2024-04-11 22:40:33,460 - Avg train loss: 147.461, avg val loss: 149.151, val mAP: 0.000,  took 0.013 hours
+2024-04-11 22:40:33,503 - Save models preds visualization on image to yolov1_train_22:10:01/pictures/visualization_example_39_epoch.jpg
