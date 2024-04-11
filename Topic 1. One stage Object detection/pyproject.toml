@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "yolov1"
+version = "0.1.0"
+description = "YOLOv1 PyTorch implementation"
+authors = ["Anton Shiryaev <med.phisiker@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+torch = "^2.2.2"
+torchvision = "^0.17.2"
+tqdm = "^4.66.2"
+pycocotools = "^2.0.7"
+fiftyone = "^0.22.3"
+
+
+[tool.poetry.group.dev.dependencies]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

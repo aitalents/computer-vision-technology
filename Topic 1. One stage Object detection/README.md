@@ -19,3 +19,47 @@
 - что из критериев сделали
 - метрики получившейся модели на сплите `validation`
 
+# Скачивание датасета
+
+Создадим папку для хранения датасета MS COCO 2017 для детекции:
+```
+mkdir detection_coco2017
+cd mkdir detection_coco2017
+```
+
+Скачаем нужные нам файлы на сервер с помощью `wget` и `txum`.
+Откроем в терминале сессию `tmux`:
+```
+tmux
+```
+
+## Скачаем необходимые файлы:
+```
+wget http://images.cocodataset.org/annotations/annotations_trainval2017.zip
+wget http://images.cocodataset.org/zips/val2017.zip
+wget http://images.cocodataset.org/zips/train2017.zip
+```
+
+## Разархивируем данные:
+```
+unzip train2017.zip
+unzip val2017.zip
+unzip annotations_trainval2017.zip
+```
+
+Приводим разархивированный датасет к виду:
+```
+dataset
+├── train
+│   ├── data
+│   └── labels.json
+└── validation
+    ├── data
+    └── labels.json
+```
+
+# Запускаем обучение
+```
+python train.py --data_folder ./data/dataset_subset --device cuda --batch_size 2 --epochs 40
+```
+

@@ -1,7 +1,6 @@
 import torch 
 import torch.nn as nn
 from torchvision import models
-
 from utils import compute_pairwise_iou
 
 
@@ -23,7 +22,8 @@ class YOLOv1(nn.Module):
         self.eps = 1e-8 # for loss computation: small addition before get sqrt of w and h
 
         # backbone = feature extractor
-        resnet50 = models.resnet50(pretrained=True)
+        resnet50 = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
+         
         self.extraction_layers = nn.Sequential(*list(resnet50.children())[:-2])
         self.neck_in = 2048 # for resnet50
 
@@ -59,6 +59,7 @@ class YOLOv1(nn.Module):
 
     def forward(self, x):
         batch_size = x.shape[0]
+        x = x.to(self.device)
 
         actvs = self.extraction_layers(x)
         actvs = self.final_conv(actvs)
