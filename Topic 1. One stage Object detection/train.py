@@ -66,17 +66,27 @@ def get_pred_example(model, img, conf_thr, iou_thr):
 
 
 def train(args):
-    
+    start_time = datetime.now().strftime("%H:%M:%S")
+
+    # create dir to store train's artifacts
+    artifacts_dir = f"yolov1_train_{start_time}"
+    weights_dir = os.path.join(artifacts_dir, "weights")
+    pictures_dir = os.path.join(artifacts_dir, "pictures")
+
+    os.makedirs(artifacts_dir)
+    os.makedirs(weights_dir)
+    os.makedirs(pictures_dir)
+
+    # create a logger to log train process
     logger_name = "YOLOv1 logger"
     if args.log_file is None:
-        current_time = datetime.now().strftime("%H:%M:%S")
-        log_file_path = f"YOLOv1_train_log_{current_time}.log"
+        log_file_path = f"YOLOv1_train_log_{start_time}.log"
     else:
         log_file_path = args.log_file
 
+    log_file_path = os.path.join(artifacts_dir, log_file_path)
     logger = create_logger(logger_name, log_file_path)
-    
-    
+
     coco_dataset_path = args.data_folder
     train_data_folder = os.path.join(coco_dataset_path, "train")
     val_data_folder = os.path.join(coco_dataset_path, "validation")
@@ -145,7 +155,8 @@ def train(args):
         logger.info(message)
 
         if min_val_loss is None or val_loss <= min_val_loss:
-            models_weights_name = f"./yolo_v1_model_{epoch}_epoch.pth"
+            models_weights_name = f"yolo_v1_model_{epoch}_epoch.pth"
+            models_weights_name = os.path.join(weights_dir, models_weights_name)
             message = f"Save new best weights to {models_weights_name}"
             print(message)
             logger.info(message)
@@ -157,6 +168,7 @@ def train(args):
             model, first_val_img[None, :, :, :], args.conf_thres, args.iou_thres
         )
         visualization_image_name = f"visualization_example_{epoch}_epoch.jpg"
+        visualization_image_name = os.path.join(pictures_dir, visualization_image_name)
         message = (
             f"Save models preds visualization on image to {visualization_image_name}"
         )
