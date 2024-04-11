@@ -1,15 +1,16 @@
 from argparse import ArgumentParser
+from datetime import datetime
 import os
 import time
-from tqdm import tqdm
 
+from tqdm import tqdm
 import torch
 from torch.utils.data import DataLoader
 import torch.optim as optim
 
 from dataset import COCODetDataset, batch_collate_fn
 from model import YOLOv1
-from utils import nms, render_pred_bboxes, compute_map
+from utils import nms, render_pred_bboxes, compute_map, create_logger
 
 
 def evaluate(model, dataloader, dataset, epoch):
@@ -65,6 +66,17 @@ def get_pred_example(model, img, conf_thr, iou_thr):
 
 
 def train(args):
+    
+    logger_name = "YOLOv1 logger"
+    if args.log_file is None:
+        current_time = datetime.now().strftime("%H:%M:%S")
+        log_file_path = f"YOLOv1_train_log_{current_time}.log"
+    else:
+        log_file_path = args.log_file
+
+    logger = create_logger(logger_name, log_file_path)
+    
+    
     coco_dataset_path = args.data_folder
     train_data_folder = os.path.join(coco_dataset_path, "train")
     val_data_folder = os.path.join(coco_dataset_path, "validation")
@@ -102,6 +114,7 @@ def train(args):
 
     for epoch in range(args.epochs):
         print(f"Epoch {epoch+1}/{args.epochs}")
+        logger.info(f"Epoch {epoch+1}/{args.epochs}")
         epoch_start_time = time.time()
         epoch_loss = 0.0
 
@@ -127,13 +140,15 @@ def train(args):
         val_loss, val_map = evaluate(model, val_loader, val_dataset, epoch)
 
         epoch_time = time.time() - epoch_start_time
-        print(
-            f"Avg train loss: {epoch_loss:.3f}, avg val loss: {val_loss:.3f}, val mAP: {val_map:.3f},  took {epoch_time / (60 * 60):.3f} hours"
-        )
+        message = f"Avg train loss: {epoch_loss:.3f}, avg val loss: {val_loss:.3f}, val mAP: {val_map:.3f},  took {epoch_time / (60 * 60):.3f} hours"
+        print(message)
+        logger.info(message)
 
         if min_val_loss is None or val_loss <= min_val_loss:
             models_weights_name = f"./yolo_v1_model_{epoch}_epoch.pth"
-            print(f"Save new best weights to {models_weights_name}")
+            message = f"Save new best weights to {models_weights_name}"
+            print(message)
+            logger.info(message)
             torch.save(model.state_dict(), models_weights_name)
             min_val_loss = val_loss
 
@@ -142,7 +157,11 @@ def train(args):
             model, first_val_img[None, :, :, :], args.conf_thres, args.iou_thres
         )
         visualization_image_name = f"visualization_example_{epoch}_epoch.jpg"
-        print(f"Save models preds visualization on image to {visualization_image_name}")
+        message = (
+            f"Save models preds visualization on image to {visualization_image_name}"
+        )
+        print(message)
+        logger.info(message)
         rendered_img.save(visualization_image_name)
 
 
@@ -171,6 +190,7 @@ if __name__ == "__main__":
         "--conf_thres", type=float, default=0.25, help="Confidence threshold"
     )
 
-    args = parser.parse_args()
+    parser.add_argument("--log_file", type=str, default=None, help="Log file path")
 
+    args = parser.parse_args()
     train(args)
