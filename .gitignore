@@ -133,3 +133,4 @@ dmypy.json
 *.gif
 *.mp4
 *.avi
+*.csv

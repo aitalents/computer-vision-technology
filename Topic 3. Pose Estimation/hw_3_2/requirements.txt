@@ -1,0 +1,9 @@
+torch==2.2.1
+torchaudio==2.2.1
+torchvision==0.17.1
+ultralytics==8.1.47
+pandas==2.2.1
+numpy==1.26.4
+matplotlib==3.8.3
+imageio==2.34.0
+imageio-ffmpeg==0.4.9
