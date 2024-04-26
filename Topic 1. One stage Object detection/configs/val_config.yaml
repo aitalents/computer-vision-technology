@@ -1,0 +1,3 @@
+device: "cuda"
+batch_size: 32
+load_path: "models/model_last.pth"
