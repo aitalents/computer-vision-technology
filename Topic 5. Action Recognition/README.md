@@ -12,8 +12,8 @@ https://www.deepmind.com/open-source/kinetics
  
 Всего 8 классов для различных видов танцев:
 
- 0 - belly dancing
- 1 - breakdancing
+ 0) - belly dancing
+ 1) - breakdancing
  2 - country line dancing
  3 - dancing ballet
  4 - dancing charleston
