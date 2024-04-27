@@ -1,0 +1,56 @@
+
+1. Set up the environment:
+
+requirements.txt
+Torch, torchvision etc.
+I use conda
+Download and preprocess the COCO-2017 dataset (https://docs.voxel51.com/user_guide/dataset_zoo/datasets.html#dataset-zoo-coco-2017)
+May need conversion into a suitable format like pytorch datasets or dataloaders.
+
+2. Load a pretrained backbone:
+
+Orignially guys used a custom 24-layer convolutional neural network as the backbone similar to GoogLeNet
+
+I suggest using smth like resnet34.
+It is more modern and more efficient.
+We have little time left, so resnet101 and resnet50 seems way too excessive, vgg16 & resnet18 are just shit.
+But we can change backbone if having more time or obtaining fucked up results.
+
+Freeze the weights of the backbone initially to retain the pretrained weights, and fine-tune them later.
+
+3. Implement custom detection layers:
+
+Add custom detection layers to the pretrained backbone. 
+Detection layers are responsible for predicting bounding boxes and class probabilities.
+
+4. Implement non-max suppression (NMS):
+
+Write NMS function to filter out the redundant bounding boxes based on their Intersection over Union (IoU) and confidence scores.
+
+5. Implement anchor boxes:
+
+Define anchor boxes according to the dataset's objects aspect ratios. 
+Use them to predict bounding boxes in the detection layer.
+By that improve localization accuracy
+
+6. Define Loss Function:
+
+Implement the YOLOv1 loss function, which includes both classification and localization losses.
+YOLO loss (the most obvious, это вообще существует или меня обманули..?)
+
+7. Train the model:
+
+Train the model using COCO-2017 training. 
+Monitor the training process by tracking the loss values and validation metrics
+
+8. Implement mean Average Precision (mAP) calculation & evaluate:
+
+evaluate the model's performance
+Calculate mAP on the validation split to assess detection accuracy
+can use the COCO API (вообще не уверен, что это какая-то реально существующая вещь, мож опять обманули)
+
+9. ?? опционально наверное fine-tune backbone
+
+unfreeze some of the backbone's layers and train the entire model again with a lower learning rate?
+
+PROFIT МЫ ВОСХИТИТЕЛЬНЫ
