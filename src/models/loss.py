@@ -6,9 +6,7 @@ import torch.nn as nn
 from src.models.loss_utils import intersection_over_union
 
 
-def mean_average_precision(
-    pred_boxes, true_boxes, iou_threshold=0.5, box_format="midpoint", num_classes=80
-):
+def mean_average_precision(pred_boxes, true_boxes, iou_threshold=0.5, box_format="midpoint", num_classes=80):
     """
     Calculates mean average precision
     Parameters:
@@ -69,9 +67,7 @@ def mean_average_precision(
         for detection_idx, detection in enumerate(detections):
             # Only take out the ground_truths that have the same
             # training idx as detection
-            ground_truth_img = [
-                bbox for bbox in ground_truths if bbox[0] == detection[0]
-            ]
+            ground_truth_img = [bbox for bbox in ground_truths if bbox[0] == detection[0]]
 
             num_gts = len(ground_truth_img)
             best_iou = 0
@@ -185,8 +181,7 @@ class YoloLoss(nn.Module):
 
         # pred_box is the confidence score for the bbox with highest IoU
         pred_box = (
-            bestbox * predictions[..., self.C + 5 : self.C + 6]
-            + (1 - bestbox) * predictions[..., self.C : self.C + 1]
+            bestbox * predictions[..., self.C + 5 : self.C + 6] + (1 - bestbox) * predictions[..., self.C : self.C + 1]
         )
 
         object_loss = self.mse(
@@ -205,12 +200,8 @@ class YoloLoss(nn.Module):
         # )
 
         no_object_loss = self.mse(
-            torch.flatten(
-                (1 - exists_box) * predictions[..., self.C : self.C + 1], start_dim=1
-            ),
-            torch.flatten(
-                (1 - exists_box) * target[..., self.C : self.C + 1], start_dim=1
-            ),
+            torch.flatten((1 - exists_box) * predictions[..., self.C : self.C + 1], start_dim=1),
+            torch.flatten((1 - exists_box) * target[..., self.C : self.C + 1], start_dim=1),
         )
 
         no_object_loss += self.mse(
@@ -218,9 +209,7 @@ class YoloLoss(nn.Module):
                 (1 - exists_box) * predictions[..., self.C + 5 : self.C + 6],
                 start_dim=1,
             ),
-            torch.flatten(
-                (1 - exists_box) * target[..., self.C : self.C + 1], start_dim=1
-            ),
+            torch.flatten((1 - exists_box) * target[..., self.C : self.C + 1], start_dim=1),
         )
 
         # ================== #

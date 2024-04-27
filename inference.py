@@ -25,9 +25,7 @@ LOAD_MODEL_FILE = "model.pth"
 
 if __name__ == "__main__":
     model = YoloV1(split_size=7, num_boxes=2, num_classes=80).to(DEVICE)
-    optimizer = optim.Adam(
-        model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
-    )
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
     loss_fn = YoloLoss()
 
     if LOAD_MODEL:
@@ -52,11 +50,7 @@ if __name__ == "__main__":
         model.eval()
         train_fn(test_loader, model, optimizer, loss_fn)
 
-        pred_boxes, target_boxes = get_bboxes(
-            test_loader, model, iou_threshold=0.5, threshold=0.4
-        )
+        pred_boxes, target_boxes = get_bboxes(test_loader, model, iou_threshold=0.5, threshold=0.4)
 
-        mean_avg_prec = mean_average_precision(
-            pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint"
-        )
+        mean_avg_prec = mean_average_precision(pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint")
         print(f"Test MAP: {mean_avg_prec}")

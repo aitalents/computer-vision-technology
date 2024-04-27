@@ -30,9 +30,7 @@ def intersection_over_union(boxes_preds, boxes_labels, box_format="midpoint"):
         box1_x1 = boxes_preds[..., 0:1]
         box1_y1 = boxes_preds[..., 1:2]
         box1_x2 = boxes_preds[..., 2:3]
-        box1_y2 = boxes_preds[
-            ..., 3:4
-        ]  # Output tensor should be (N, 1). If we only use 3, we go to (N)
+        box1_y2 = boxes_preds[..., 3:4]  # Output tensor should be (N, 1). If we only use 3, we go to (N)
         box2_x1 = boxes_labels[..., 0:1]
         box2_y1 = boxes_labels[..., 1:2]
         box2_x2 = boxes_labels[..., 2:3]
@@ -160,9 +158,7 @@ def convert_cellboxes(predictions, S=7, C=80):
     predictions = predictions.reshape(batch_size, 7, 7, C + 10)
     bboxes1 = predictions[..., C + 1 : C + 5]
     bboxes2 = predictions[..., C + 6 : C + 10]
-    scores = torch.cat(
-        (predictions[..., C].unsqueeze(0), predictions[..., C + 5].unsqueeze(0)), dim=0
-    )
+    scores = torch.cat((predictions[..., C].unsqueeze(0), predictions[..., C + 5].unsqueeze(0)), dim=0)
     best_box = scores.argmax(0).unsqueeze(-1)
     best_boxes = bboxes1 * (1 - best_box) + best_box * bboxes2
     cell_indices = torch.arange(7).repeat(batch_size, 7, 1).unsqueeze(-1)
@@ -171,12 +167,8 @@ def convert_cellboxes(predictions, S=7, C=80):
     w_y = 1 / S * best_boxes[..., 2:4]
     converted_bboxes = torch.cat((x, y, w_y), dim=-1)
     predicted_class = predictions[..., :C].argmax(-1).unsqueeze(-1)
-    best_confidence = torch.max(predictions[..., C], predictions[..., C + 5]).unsqueeze(
-        -1
-    )
-    converted_preds = torch.cat(
-        (predicted_class, best_confidence, converted_bboxes), dim=-1
-    )
+    best_confidence = torch.max(predictions[..., C], predictions[..., C + 5]).unsqueeze(-1)
+    converted_preds = torch.cat((predicted_class, best_confidence, converted_bboxes), dim=-1)
 
     return converted_preds
 

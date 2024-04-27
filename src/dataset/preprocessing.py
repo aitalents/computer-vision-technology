@@ -1,6 +1,10 @@
 import os
 
+import cv2
 import pandas as pd
+import torch
+from torch.utils.data import Dataset
+from torchvision import transforms
 
 
 class Compose(object):
@@ -14,9 +18,7 @@ class Compose(object):
         return img, bboxes
 
 
-def preprocess(
-    files_dir="./train2017", test_dir="./val2017", annotations="./annotations"
-):
+def preprocess(files_dir="./train2017", test_dir="./val2017", annotations="./annotations"):
     images = [image for image in sorted(os.listdir(files_dir)) if image[-4:] == ".jpg"]
     annots = []
     for image in images:
@@ -26,9 +28,7 @@ def preprocess(
     images, annots = pd.Series(images, name="images"), pd.Series(annots, name="annots")
     df = pd.DataFrame(pd.concat([images, annots], axis=1))
 
-    test_images = [
-        image for image in sorted(os.listdir(test_dir)) if image[-4:] == ".jpg"
-    ]
+    test_images = [image for image in sorted(os.listdir(test_dir)) if image[-4:] == ".jpg"]
 
     test_annots = []
     for image in test_images:

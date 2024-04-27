@@ -63,9 +63,7 @@ class CocoDataset(Dataset):
 
             if label_matrix[i, j, self.C] == 0:
                 label_matrix[i, j, self.C] = 1
-                box_coordinates = torch.tensor(
-                    [x_cell, y_cell, width_cell, height_cell]
-                )
+                box_coordinates = torch.tensor([x_cell, y_cell, width_cell, height_cell])
                 label_matrix[i, j, self.C + 1 : self.C + 5] = box_coordinates
                 label_matrix[i, j, class_label] = 1
 

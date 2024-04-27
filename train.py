@@ -12,7 +12,7 @@ from src.models.utils import load_checkpoint, save_checkpoint
 from src.models.yolo import YoloV1
 
 LEARNING_RATE = 2e-5
-DEVICE = "cuda" #if torch.cuda.is_available() else "cpu"
+DEVICE = "cuda"  # if torch.cuda.is_available() else "cpu"
 BATCH_SIZE = 16  # 64 in original paper but resource exhausted error otherwise.
 WEIGHT_DECAY = 0
 EPOCHS = 20
@@ -42,9 +42,7 @@ def train_fn(train_loader, model, optimizer, loss_fn):
 
 if __name__ == "__main__":
     model = YoloV1(split_size=7, num_boxes=2, num_classes=80).to(DEVICE)
-    optimizer = optim.Adam(
-        model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
-    )
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
         optimizer=optimizer, factor=0.1, patience=3, mode="max", verbose=True
     )
@@ -84,13 +82,9 @@ if __name__ == "__main__":
     for epoch in range(EPOCHS):
         train_fn(train_loader, model, optimizer, loss_fn)
 
-        pred_boxes, target_boxes = get_bboxes(
-            train_loader, model, iou_threshold=0.5, threshold=0.4
-        )
+        pred_boxes, target_boxes = get_bboxes(train_loader, model, iou_threshold=0.5, threshold=0.4)
 
-        mean_avg_prec = mean_average_precision(
-            pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint"
-        )
+        mean_avg_prec = mean_average_precision(pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint")
         print(f"Train mAP: {mean_avg_prec}")
 
         scheduler.step(mean_avg_prec)
