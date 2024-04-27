@@ -1,0 +1,4 @@
+moviepy==1.0.3
+pandas==1.5.2
+pytube==12.1.0
+tqdm==4.64.1
