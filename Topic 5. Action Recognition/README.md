@@ -6,9 +6,9 @@
 https://www.deepmind.com/open-source/kinetics
 
 В репозитории представлены скрипты: 
- download_data.py - для скачивания видео
- videos_to_frames.py - для создания фреймов из видео (из 15 гб видео получилось 80 гб фреймов)
- action-recognition.ipynb - ноутбук с классами моделей и экспериментами
+ - download_data.py - для скачивания видео
+ - videos_to_frames.py - для создания фреймов из видео (из 15 гб видео получилось 80 гб фреймов)
+ - action-recognition.ipynb - ноутбук с классами моделей и экспериментами
  
 Обучение на rtx3090
 
