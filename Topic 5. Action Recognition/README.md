@@ -25,8 +25,6 @@ https://www.deepmind.com/open-source/kinetics
 
  ![image](https://github.com/Sergey-Kit/computer-vision-technology/assets/82327055/633c405d-5c5e-4886-a8db-b2b5043ff798)
 
-![Снимок экрана 2024-04-26 084323](https://github.com/Sergey-Kit/computer-vision-technology/assets/82327055/17fcfa60-1b05-4a54-a48f-088d41c63f1d)
-
 Обучение целиком занимает меного времени, поэтому в отчете вариант обучения на ~25 минут на 2 эпохах на 200 видео. Всего 8 классов. Обучение на rtx3090
 
 ![Снимок экрана 2024-04-26 084323](https://github.com/Sergey-Kit/computer-vision-technology/assets/82327055/818e0e00-6a53-4eaa-b656-db33aaed24ec)
