@@ -12,14 +12,14 @@ https://www.deepmind.com/open-source/kinetics
  
 Всего 8 классов для различных видов танцев:
 
- 0) - belly dancing
- 1) - breakdancing
- 2 - country line dancing
- 3 - dancing ballet
- 4 - dancing charleston
- 5 - dancing gangnam style
- 6 - dancing macarena
- 7 - jumpstyle dancing
+  - 1 - belly dancing
+  - 2 - breakdancing
+  - 3 - country line dancing
+  - 4 - dancing ballet
+  - 5 - dancing charleston
+  - 6 - dancing gangnam style
+  - 7 - dancing macarena
+  - 8 - jumpstyle dancing
 
  1. Пострена с нуля и обучена модель классификации танцев на видео на основе 3D-свёрток
 
