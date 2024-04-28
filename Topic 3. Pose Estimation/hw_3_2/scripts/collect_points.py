@@ -1,8 +1,7 @@
 import os
 import pickle
-from ultralytics import YOLO
 from glob import glob
-from utils import check_intersection
+from utils import model, check_intersection
 
 
 def extract_points(results):
@@ -46,11 +45,8 @@ def extract_points(results):
         return points_obj
 
 
-model = YOLO("yolov8n-pose.pt")
-
 def main():
     videos = glob("data/train/videos/*.mp4")
-
     for video in videos:
         video_id = os.path.basename(video).split(".mp4")[0].replace("video_", "")
         results = model.track(source=video, stream=True, verbose=False)
