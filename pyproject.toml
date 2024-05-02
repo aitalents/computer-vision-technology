@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "object-detection-itmo"
+version = "0.1.0"
+description = ""
+authors = ["konstantgr <konstantin.grotov@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+torch = "^2.2.2"
+pillow = "^10.2.0"
+pandas = "^2.2.1"
+torchvision = "^0.17.2"
+tqdm = "^4.66.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.3.4"
+jupyter = "^1.0.0"
+notebook = "^7.1.2"
+pre-commit = "^3.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
