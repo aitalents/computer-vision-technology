@@ -1,7 +1,7 @@
 import os
 import pickle
 from glob import glob
-from utils import model, check_intersection
+from utils import model, check_intersection, normalize_points
 
 
 def extract_points(results):
@@ -26,6 +26,7 @@ def extract_points(results):
                 if check_intersection(points, r.orig_img.shape):
                     id_obj = ids[i]
                     found = True
+                    points = normalize_points(points, r.orig_img.shape)
                     points_obj.append(points)
                     break
 
@@ -39,6 +40,7 @@ def extract_points(results):
                     stop = True
                     break
                 elif ids[i] == id_obj:
+                    points = normalize_points(points, r.orig_img.shape)
                     points_obj.append(points)
 
     if points_obj:

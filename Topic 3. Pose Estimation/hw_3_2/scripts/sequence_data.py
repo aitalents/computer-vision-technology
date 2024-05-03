@@ -51,10 +51,8 @@ class PointsDataset(torch.utils.data.Dataset):
         self.data = dict(zip(df["video_id"], df["label"]))
         self.id = list(self.data.keys())
 
-
     def __len__(self):
         return len(self.id)
-
 
     def __getitem__(self, idx):
         video_id = self.id[idx]

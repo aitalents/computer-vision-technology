@@ -10,7 +10,7 @@ import pickle
 model = YOLO('yolov8n-pose.pt')
 
 
-def check_intersection(item: np.ndarray, image_shape: tuple[int]):
+def check_intersection(item: np.ndarray, image_shape: tuple[int, int]):
 
     height, width, _ = image_shape
     x, y = width // 2, height // 2
@@ -34,6 +34,12 @@ def check_intersection(item: np.ndarray, image_shape: tuple[int]):
     bool_y = y_min - eps_y <= y <= y_max + eps_y
 
     return all([bool_x, bool_y])
+
+
+def normalize_points(item: np.ndarray, image_shape: tuple[int, int]) -> np.ndarray:
+    item[:, 1] = item[:, 1] / image_shape[0]
+    item[:, 0] = item[:, 0] / image_shape[1]
+    return item
 
 
 def save_frames(array: np.ndarray, video_id: str) -> None:
