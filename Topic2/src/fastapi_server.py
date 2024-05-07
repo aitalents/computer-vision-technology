@@ -89,8 +89,8 @@ async def websocket_endpoint(websocket: WebSocket):
         await asyncio.sleep(0.5)
         # TODO: part 1
         # el = tracker_soft(el)
-        preds.append(el)
         # TODO: part 2
+        preds.append(el)
         el = tracker_strong(el)
         # отправка информации по фрейму
         await websocket.send_json(el)
