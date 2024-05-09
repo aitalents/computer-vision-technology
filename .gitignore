@@ -133,3 +133,11 @@ dmypy.json
 *.gif
 *.mp4
 *.avi
+
+.DS_Store
+**/.DS_Stores
+.ipynb_checkpoints
+
+DATA/*
+
+models/*
