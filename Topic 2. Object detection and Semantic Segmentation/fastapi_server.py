@@ -32,15 +32,12 @@ def convert_to_yolo_format(xyxy_bbox):
     x1, y1, x2, y2 = xyxy_bbox
     return [(x1 + x2) / 2, (y1 + y2) / 2, x2 - x1, y2 - y1]
 
-# Инициализация свободных идентификаторов треков
 free_track_ids = list(range(50))
 
 
-# Реализация алгоритма трекера (soft)
 def soft_tracker(current_frame, previous_frame):
     FP = 0
     FN = 0
-    IDSW = 0
 
     if not previous_frame:
         for obj in current_frame['data']:
@@ -48,13 +45,9 @@ def soft_tracker(current_frame, previous_frame):
                 obj['track_id'] = free_track_ids.pop(0)
             else:
                 obj['track_id'] = None
-        return current_frame, FP, FN, IDSW
+        return current_frame, FP, FN
 
     for obj in current_frame['data']:
-        if not obj['bounding_box']:
-            obj['track_id'] = None
-
-    for obj in previous_frame['data']:
         if not obj['bounding_box']:
             obj['track_id'] = None
 
@@ -69,13 +62,10 @@ def soft_tracker(current_frame, previous_frame):
         if distance_matrix[row, col] < 50:
             current_frame['data'][col]['track_id'] = previous_frame['data'][row]['track_id']
             assigned_ids.add(previous_frame['data'][row]['track_id'])
-        else:
-            FP += 1
 
     for obj in current_frame['data']:
         if obj['bounding_box'] and obj['track_id'] is None:
-            obj['track_id'] = free_track_ids.pop(0)
-            FP += 1
+            obj['track_id'] = int(free_track_ids.pop(0))
 
     for obj in previous_frame['data']:
         if obj['bounding_box'] and obj['track_id'] not in assigned_ids:
@@ -90,13 +80,11 @@ def soft_tracker(current_frame, previous_frame):
                 free_track_ids.append(track_id)
 
     free_track_ids.sort()
-    return current_frame, FP, FN, IDSW
+    return current_frame, FP, FN
 
-# Реализация алгоритма трекера (strong)
 def strong_tracker(current_frame, deepsort_tracker):
     FP = 0
     FN = 0
-    IDSW = 0
 
     frame_path = f'./frames/{name}/{current_frame["frame_id"]}.png'
     image = cv2.imread(frame_path)
@@ -114,11 +102,6 @@ def strong_tracker(current_frame, deepsort_tracker):
     detected_track_ids = set(track_dict.keys())
     gt_track_ids = {obj['track_id'] for obj in current_frame['data'] if obj['bounding_box']}
 
-    # Calculate FP and FN
-    for track_id in detected_track_ids:
-        if track_id not in gt_track_ids:
-            FP += 1
-
     for gt_track_id in gt_track_ids:
         if gt_track_id not in detected_track_ids:
             FN += 1
@@ -128,11 +111,9 @@ def strong_tracker(current_frame, deepsort_tracker):
             bbox_center = convert_to_yolo_format(obj['bounding_box'])[:2]
             closest_track_id = min(track_dict,
                                    key=lambda track_id: calculate_euclidean_distance(track_dict[track_id], bbox_center))
-            if obj['track_id'] != closest_track_id:
-                IDSW += 1
-            obj['track_id'] = closest_track_id
+            obj['track_id'] = int(closest_track_id)
 
-    return current_frame, FP, FN, IDSW
+    return current_frame, FP, FN
 
 
 @app.websocket("/ws")
@@ -153,15 +134,15 @@ async def websocket_endpoint(websocket: WebSocket):
         await asyncio.sleep(0.1)
 
         # Выбор трекера на основе условия: 0 - soft, 1 - strong
-        tracker_choice = 0  # Здесь вы можете задать условие для выбора трекера
+        tracker_choice = 1
 
         if tracker_choice == 0:
             tracker_name = "soft"
-            current_frame, FP, FN, IDSW = soft_tracker(current_frame, previous_frame)
+            current_frame, FP, FN = soft_tracker(current_frame, previous_frame)
             previous_frame = current_frame
         elif tracker_choice == 1:
             tracker_name = "strong"
-            current_frame, FP, FN, IDSW = strong_tracker(current_frame, deepsort_tracker)
+            current_frame, FP, FN = strong_tracker(current_frame, deepsort_tracker)
 
         for obj in current_frame['data']:
             if obj['track_id'] is not None:
@@ -169,8 +150,8 @@ async def websocket_endpoint(websocket: WebSocket):
 
         total_FP += FP
         total_FN += FN
-        total_IDSW += IDSW
-        total_GT += len([obj for obj in current_frame['data'] if obj['bounding_box']])
+        total_IDSW = sum(sum(1 for i in range(1, len(tracking_ids)) if tracking_ids[i] != tracking_ids[i-1]) for tracking_ids in tracking_ids.values())
+        total_GT = sum(len(gt_objects) for gt_objects in tracking_ids.values())
 
         await websocket.send_json(current_frame)
 
