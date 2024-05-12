@@ -1,6 +1,40 @@
 import torch
 from collections import Counter
 
+
+class AnchorBoxes:
+    def __init__(self, anchor_sizes, grid_size, image_size):
+        self.anchor_sizes = torch.tensor(anchor_sizes, dtype=torch.float32)
+        self.grid_size = grid_size
+        self.stride = image_size / grid_size
+        self.anchors = self._create_anchors()
+
+    def _create_anchors(self):
+        # Создание якорей для каждой ячейки сетки.
+        cell_indices = torch.arange(self.grid_size)
+        x, y = torch.meshgrid(cell_indices, cell_indices, indexing='ij')
+        # Вычисление центров ячеек
+        cell_centers = torch.stack((x, y), dim=2) * self.stride + self.stride / 2
+        cell_centers = cell_centers.view(-1, 1, 2).expand(-1, len(self.anchor_sizes), 2)
+        anchors = torch.cat((cell_centers, self.anchor_sizes.expand(self.grid_size**2, -1, -1)), dim=2)
+        # grid_size, grid_size, num_anchors, 4
+        return anchors.view(self.grid_size, self.grid_size, -1, 4)
+
+    def assign_anchors(self, bboxes, calculate_iou):
+        # Назначение каждой рамке наилучшего якоря на основе IoU.
+        num_bboxes = bboxes.shape[0]
+        anchors_flat = self.anchors.view(-1, 4)
+        # Вычисляем IoU между каждой рамкой и якорем
+        ious = calculate_iou(bboxes, anchors_flat)
+        # Индекс якоря с максимальным IoU для каждой рамки
+        best_anchors = ious.argmax(dim=1)  
+        # Позиции на сетке и индексы якорей
+        grid_positions = best_anchors // (len(self.anchor_sizes) * self.grid_size)
+        anchor_indices = best_anchors % len(self.anchor_sizes)
+        return torch.stack([grid_positions // self.grid_size, grid_positions % self.grid_size, anchor_indices], dim=1)
+
+
+
 class DetectionUtils:
     # Фильтрация и сортировка ограничивающих рамок по порогу уверенности и IoU
     def filter_and_sort_boxes(self, boxes, score_threshold, iou_threshold, format="corners"):
