@@ -17,21 +17,17 @@ class AnchorBoxes:
         cell_centers = torch.stack((x, y), dim=2) * self.stride + self.stride / 2
         cell_centers = cell_centers.view(-1, 1, 2).expand(-1, len(self.anchor_sizes), 2)
         anchors = torch.cat((cell_centers, self.anchor_sizes.expand(self.grid_size**2, -1, -1)), dim=2)
-        # grid_size, grid_size, num_anchors, 4
         return anchors.view(self.grid_size, self.grid_size, -1, 4)
 
     def assign_anchors(self, bboxes, calculate_iou):
-        # Назначение каждой рамке наилучшего якоря на основе IoU.
         num_bboxes = bboxes.shape[0]
         anchors_flat = self.anchors.view(-1, 4)
-        # Вычисляем IoU между каждой рамкой и якорем
         ious = calculate_iou(bboxes, anchors_flat)
-        # Индекс якоря с максимальным IoU для каждой рамки
-        best_anchors = ious.argmax(dim=1)  
-        # Позиции на сетке и индексы якорей
+        best_anchors = ious.argmax(dim=1)
         grid_positions = best_anchors // (len(self.anchor_sizes) * self.grid_size)
         anchor_indices = best_anchors % len(self.anchor_sizes)
         return torch.stack([grid_positions // self.grid_size, grid_positions % self.grid_size, anchor_indices], dim=1)
+
 
 
 
