@@ -123,27 +123,26 @@ class Compose(object):
 
 
 class COCODataset(Dataset):
-    def __init__(self, annotations_file, images_directory, grid_size=7, num_boxes=2, num_classes=3, transformations=None):
+    def __init__(self, annotations_file, images_directory, anchor_sizes, grid_size=7, num_boxes=2, num_classes=3, transformations=None):
         self.annotations_file = annotations_file
         self.images_directory = images_directory
         self.transformations = transformations
         self.grid_size = grid_size
         self.num_boxes = num_boxes
-        self.num_classes = num_classes  # Ограничение количества классов до трех
+        self.num_classes = num_classes
 
-        # Загрузка данных из JSON-файла
+        self.anchors = AnchorBoxes(anchor_sizes, grid_size, image_size=448)
+        self.detection_utils = DetectionUtils()
+
         with open(self.annotations_file, 'r') as file:
             self.dataset = json.load(file)
 
-        # Отбор аннотаций для первых трех классов
         self.filtered_annotations = [
             ann for ann in self.dataset['annotations'] if ann['category_id'] in [1, 2, 3]
         ]
 
-        # Сбор уникальных идентификаторов изображений
         image_ids = set(ann['image_id'] for ann in self.filtered_annotations)
 
-        # Фильтрация изображений с нужными аннотациями
         self.filtered_images = [
             img for img in self.dataset['images'] if img['id'] in image_ids
         ]
@@ -152,33 +151,29 @@ class COCODataset(Dataset):
         return len(self.filtered_images)
     
     def __getitem__(self, index):
-        # Информация о выбранном изображении и его путь
         image_info = self.filtered_images[index]
         image_path = os.path.join(self.images_directory, image_info['file_name'])
         image = Image.open(image_path).convert("RGB")
     
-        # Аннотации для изображения
         image_annotations = [
             ann for ann in self.filtered_annotations if ann['image_id'] == image_info['id']
         ]
 
-        # Подготовка данных для обучения: ограничивающие рамки и классы
         bounding_boxes = []
         for annotation in image_annotations:
-            class_id = annotation['category_id'] - 1  # Корректировка индекса класса
+            class_id = annotation['category_id'] - 1
             bbox = annotation['bbox']
             center_x = bbox[0] + bbox[2] / 2
             center_y = bbox[1] + bbox[3] / 2
             box_width = bbox[2]
             box_height = bbox[3]
-    
-            # Нормализация координат относительно размера изображения
+
             img_width, img_height = image.size
             center_x /= img_width
             center_y /= img_height
             box_width /= img_width
             box_height /= img_height
-    
+
             bounding_boxes.append([class_id, center_x, center_y, box_width, box_height])
 
         bounding_boxes = torch.tensor(bounding_boxes)
@@ -186,106 +181,79 @@ class COCODataset(Dataset):
         if self.transformations:
             image, bounding_boxes = self.transformations(image, bounding_boxes)
 
-        # Построение матрицы меток
         label_matrix = torch.zeros((self.grid_size, self.grid_size, self.num_classes + 5 * self.num_boxes))
-        for box in bounding_boxes:
-            class_id, x, y, width, height = box.tolist()
-            class_id = int(class_id)
 
-            i, j = int(self.grid_size * y), int(self.grid_size * x)
-            x_cell, y_cell = self.grid_size * x - j, self.grid_size * y - i
+        if len(bounding_boxes) > 0:
+            assigned_anchors = self.anchors.assign_anchors(bounding_boxes[:, 1:], self.detection_utils.calculate_iou)
 
-            width_cell, height_cell = width * self.grid_size, height * self.grid_size
+            for idx, (class_id, center_x, center_y, box_width, box_height) in enumerate(bounding_boxes):
+                grid_x, grid_y, anchor_idx = assigned_anchors[idx].tolist()
+                x_cell, y_cell = self.grid_size * center_x - grid_x, self.grid_size * center_y - grid_y
+                width_cell, height_cell = box_width * self.grid_size, box_height * self.grid_size
 
-            if label_matrix[i, j, self.num_classes] == 0:
-                label_matrix[i, j, self.num_classes] = 1
-                box_coordinates = torch.tensor([x_cell, y_cell, width_cell, height_cell])
-                label_matrix[i, j, self.num_classes + 1:self.num_classes + 5] = box_coordinates
-                label_matrix[i, j, class_id] = 1
+                if label_matrix[grid_x, grid_y, self.num_classes] == 0:
+                    label_matrix[grid_x, grid_y, self.num_classes] = 1
+                    box_coordinates = torch.tensor([x_cell, y_cell, width_cell, height_cell])
+                    label_matrix[grid_x, grid_y, self.num_classes + 1 + 5 * anchor_idx:self.num_classes + 5 * (anchor_idx + 1)] = box_coordinates
+                    label_matrix[grid_x, grid_y, class_id] = 1
 
         return image, label_matrix
 
 
+
 def train_model(data_loader, model, optimizer, criterion, device='cuda'):
-    model.train()  # Переключение модели в режим обучения
-    total_loss = []  # Список для хранения значений потерь по каждому батчу
-    progress_bar = tqdm(data_loader, leave=True)  # Инициализация индикатора прогресса
+    model.train()
+    total_loss = []
+    progress_bar = tqdm(data_loader, leave=True)
 
     for _, (inputs, targets) in enumerate(progress_bar):
-        inputs, targets = inputs.to(device), targets.to(device)  # Перемещение данных на устройство
-        predictions = model(inputs)  # Получение предсказаний модели
-        loss = criterion(predictions, targets)  # Расчет потерь
-        total_loss.append(loss.item())  # Добавление текущих потерь в список
+        inputs, targets = inputs.to(device), targets.to(device)
+        predictions = model(inputs)
+        loss = criterion(predictions, targets)
+        total_loss.append(loss.item())
 
-        # Сброс градиентов и выполнение обратного распространения
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
-        # Обновление индикатора прогресса текущим значением потерь
         progress_bar.set_postfix(loss=loss.item())
 
-    average_loss = sum(total_loss) / len(total_loss)  # Расчет среднего значения потерь
+    average_loss = sum(total_loss) / len(total_loss)
     print(f"AV_LOSS: {average_loss:.4}")
     return average_loss
 
-
 def main(detection_utils, transform):
+    anchor_sizes = [(0.28, 0.23), (0.34, 0.56)]
     model = YOLOv1(split_size=7, num_boxes=2, num_classes=3).to(DEVICE)
-    optimizer = optim.Adam(
-        model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
-    )
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer, factor=0.1, patience=3, mode='max', verbose=True)
-    loss_fn = YOLOv1Loss()
+    loss_fn = YOLOv1Loss(detection_utils, grid_size=7, num_boxes=2, num_classes=3)
 
     if LOAD_MODEL:
         detection_utils.load_model_state(torch.load(LOAD_MODEL_FILE), model, optimizer)
 
     train_dataset = COCODataset(
-        transform=transform,
-        files_dir='/data/train',
-        ann_path='/annotations/instances_train2017.json'
+        annotations_file='/annotations/instances_train2017.json',
+        images_directory='/data/train',
+        anchor_sizes=anchor_sizes,
+        transformations=transform
     )
 
     test_dataset = COCODataset(
-        transform=transform,
-        files_dir='/data/val',
-        ann_path='/annotations/instances_val2017.json'
+        annotations_file='/annotations/instances_val2017.json',
+        images_directory='/data/val',
+        anchor_sizes=anchor_sizes,
+        transformations=transform
     )
 
-    train_loader = DataLoader(
-        dataset=train_dataset,
-        batch_size=BATCH_SIZE,
-        shuffle=True,
-        drop_last=False,
-    )
-
-    test_loader = DataLoader(
-        dataset=test_dataset,
-        batch_size=BATCH_SIZE,
-        shuffle=True,
-        drop_last=False,
-    )
+    train_loader = DataLoader(dataset=train_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=False)
+    test_loader = DataLoader(dataset=test_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=False)
 
     for _ in range(EPOCHS):
         train_model(train_loader, model, optimizer, loss_fn)
 
-        pred_boxes, target_boxes = detection_utils.get_filtered_boxes(
-            train_loader, model, iou_threshold=0.5, threshold=0.4
-        )
+        pred_boxes, target_boxes = detection_utils.get_filtered_boxes(train_loader,
 
-        mean_avg_prec = detection_utils.calculate_map(
-            pred_boxes, target_boxes, iou_threshold=0.5, box_format="midpoint"
-        )
-        print(f"Train mAP: {mean_avg_prec:.2}")
-
-        scheduler.step(mean_avg_prec)
-
-    checkpoint = {
-            "state_dict": model.state_dict(),
-            "optimizer": optimizer.state_dict(),
-    }
-    detection_utils.save_model_state(checkpoint, filename=LOAD_MODEL_FILE)
 
 LEARNING_RATE = 3e-5
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
