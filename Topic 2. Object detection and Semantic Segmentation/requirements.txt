@@ -1,0 +1,9 @@
+fastapi
+matplotlib
+numpy
+scipy
+uvicorn[standard]
+deep-sort-realtime
+torch
+torchvision
+pandas

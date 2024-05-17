@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/konva@8.3.14/konva.min.js"></script>
+    <meta charset="utf-8"/>
+    <title>Konva Rect Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var width = 1000;
+    var height = 800;
+
+    var stage = new Konva.Stage({
+        container: 'container',
+        width: width,
+        height: height,
+    });
+
+    var layer = new Konva.Layer();
+    var gridLayer = new Konva.Layer();
+
+    function addBoundingRect() {
+        gridLayer.add(new Konva.Line({
+            points: [0, 0, width, 0],
+            stroke: 'black',
+            strokeWidth: 3,
+            name: 'bound'
+        }));
+
+        gridLayer.add(new Konva.Line({
+            points: [0, height, width, height],
+            stroke: 'black',
+            strokeWidth: 3,
+            name: 'bound'
+        }));
+        gridLayer.add(new Konva.Line({
+            points: [0, 0, 0, height],
+            stroke: 'black',
+            strokeWidth: 3,
+            name: 'bound'
+        }));
+
+        gridLayer.add(new Konva.Line({
+            points: [width, 0, width, height],
+            stroke: 'black',
+            strokeWidth: 3,
+            name: 'bound'
+        }));
+    }
+
+    function createLabel(x, y, text) {
+        var text = new Konva.Text({
+            x: x,
+            y: y,
+            text: text,
+            fontSize: 16,
+            fontFamily: 'Calibri',
+            fill: 'green',
+            name: 'createLabel',
+            draggable: false,
+        });
+
+        return text
+    }
+
+
+    function CountryBall(id, img) {
+        var imageObj = new Image();
+        imageObj.src = img;
+        var group;
+        var label1 = createLabel(40, -20, 'ID: ?')
+        var label2 = createLabel(0, 110, '[x, y]')
+        var cb_width = 120
+        var cb_height = 100
+
+        var curImg = new Konva.Image({
+            image: imageObj,
+            width: cb_width,
+            height: cb_height,
+        });
+
+        var bounding_box = new Konva.Rect({
+            x: 0,
+            y: 0,
+            width: cb_width,
+            height: cb_height,
+            stroke: Konva.Util.getRandomColor(),
+            strokeWidth: 2,
+        });
+
+        function set_id(s) {
+            label1.setAttr('text', 'ID: ' + s)
+        }
+
+        function set_coords(s) {
+            label2.setAttr('text', s)
+        }
+
+        function set_bounding_box(bb, p_x, p_y) {
+            if (bb.length) {
+                bounding_box.show();
+                bounding_box.setAttrs({
+                    width: bb[2] - bb[0],
+                    height: bb[3] - bb[1],
+                    x: bb[0] - (p_x - cb_width / 2),
+                    y: bb[1] - p_y + cb_height,
+                });
+                console.log(p_x, bb[0], p_y, bb[1])
+                // bounding_box.position({
+                //           x: bb[0],
+                //           y: bb[1]
+                //         });
+            } else {
+                bounding_box.hide();
+            }
+        }
+
+        group = new Konva.Group({
+            x: 100,
+            y: 100,
+            cb_id: id,
+            set_id: function (s) {
+                return set_id(s)
+            },
+            set_coords: function (s) {
+                return set_coords(s)
+            },
+            set_bounding_box: function (bb, p_x, p_y) {
+                return set_bounding_box(bb, p_x, p_y)
+            }
+        })
+
+        group.add(curImg);
+        group.add(bounding_box);
+        group.add(label1);
+        group.add(label2);
+        return group;
+    }
+
+    addBoundingRect()
+    stage.add(gridLayer);
+    stage.add(layer);
+
+    function connect() {
+        // изменить на true, чтобы сохранить картинки по каждому фрему
+        var make_screenshot = false
+        var country_balls = []
+
+        try {
+            var ws = new WebSocket('ws://0.0.0.0:8001/ws');
+        } catch (err) {
+            console.log('Connection attempt failed')
+        }
+
+        ws.onopen = function () {
+            console.log('ws opened')
+            // subscribe to some channels
+            ws.send(JSON.stringify({
+                //.... some message the I must send when I connect ....
+            }));
+        };
+
+        ws.onmessage = function (event) {
+            if (typeof event.data === 'string') {
+                try {
+                    var info = JSON.parse(event.data)
+                    console.log('frame_id: ' + info['frame_id'])
+                    for (let track of info['data']) {
+                        var cb_el = country_balls.find(country_balls => country_balls.getAttr('cb_id') === track['cb_id'])
+                        console.log(track)
+                        cb_el.attrs.set_bounding_box(track['bounding_box'], track['x'], track['y'])
+
+                        cb_el.position({
+                            x: track['x'],
+                            y: track['y']
+                        });
+                        cb_el.attrs.set_id(track['track_id'])
+                        cb_el.attrs.set_coords('[' + track['bounding_box'].join(', ') + ']')
+                    }
+                    if (make_screenshot) {
+                        var uri = stage.toDataURL({pixelRatio: 3});
+                        var link = document.createElement('a');
+                        link.download = info['frame_id'] + '.png';
+                        link.href = uri;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        delete link;
+                    }
+
+                } catch (err) {
+                    console.log(err)
+                    var cb_info = eval(event.data)
+                    country_balls = []
+                    layer.destroyChildren()
+                    for (let cb_el of cb_info) {
+                        country_balls.push(new CountryBall(cb_el['cb_id'], cb_el['img']))
+                        layer.add(country_balls[country_balls.length - 1]);
+                    }
+                }
+            }
+        };
+
+        ws.onclose = function (e) {
+            console.log('Socket is closed. Reconnect will be attempted in 5 seconds...');
+            setTimeout(function () {
+                connect();
+            }, 5000);
+        };
+        ws.onerror = function (err) {
+        };
+    }
+
+    connect();
+</script>
+
+</body>
+</html>
