@@ -1,0 +1,120 @@
+epoch: 0, batch: 375 / 1875, loss: 26.5950, time: 38.7382
+epoch: 0, batch: 750 / 1875, loss: 22.7513, time: 76.3947
+epoch: 0, batch: 1125 / 1875, loss: 21.1903, time: 114.0551
+epoch: 0, batch: 1500 / 1875, loss: 20.3507, time: 151.7104
+epoch: 0, batch: 1875 / 1875, loss: 19.7499, time: 189.3596
+epoch: 1, test loss: 1.2301, time: 220.4817
+epoch: 1, batch: 375 / 1875, loss: 16.7412, time: 37.7510
+epoch: 1, batch: 750 / 1875, loss: 16.7124, time: 75.4732
+epoch: 1, batch: 1125 / 1875, loss: 16.6695, time: 113.1397
+epoch: 1, batch: 1500 / 1875, loss: 16.6768, time: 150.8107
+epoch: 1, batch: 1875 / 1875, loss: 16.6126, time: 188.4809
+epoch: 2, test loss: 1.5125, time: 219.2541
+epoch: 2, batch: 375 / 1875, loss: 15.8871, time: 37.7097
+epoch: 2, batch: 750 / 1875, loss: 15.8619, time: 75.4531
+epoch: 2, batch: 1125 / 1875, loss: 15.8560, time: 113.1955
+epoch: 2, batch: 1500 / 1875, loss: 15.8722, time: 150.9049
+epoch: 2, batch: 1875 / 1875, loss: 15.8280, time: 188.5896
+epoch: 3, test loss: 1.4395, time: 225.9683
+epoch: 3, batch: 375 / 1875, loss: 15.2734, time: 37.7147
+epoch: 3, batch: 750 / 1875, loss: 15.2330, time: 75.4075
+epoch: 3, batch: 1125 / 1875, loss: 15.2229, time: 113.1227
+epoch: 3, batch: 1500 / 1875, loss: 15.2561, time: 150.8377
+epoch: 3, batch: 1875 / 1875, loss: 15.2238, time: 188.5411
+epoch: 4, test loss: 1.3887, time: 221.1122
+epoch: 4, batch: 375 / 1875, loss: 14.7298, time: 37.6912
+epoch: 4, batch: 750 / 1875, loss: 14.7022, time: 75.3975
+epoch: 4, batch: 1125 / 1875, loss: 14.6982, time: 113.0731
+epoch: 4, batch: 1500 / 1875, loss: 14.7342, time: 150.7421
+epoch: 4, batch: 1875 / 1875, loss: 14.7111, time: 188.4185
+epoch: 5, test loss: 1.4034, time: 216.7491
+epoch: 5, batch: 375 / 1875, loss: 14.1965, time: 37.6877
+epoch: 5, batch: 750 / 1875, loss: 14.1853, time: 75.3826
+epoch: 5, batch: 1125 / 1875, loss: 14.1937, time: 113.1324
+epoch: 5, batch: 1500 / 1875, loss: 14.2165, time: 150.8490
+epoch: 5, batch: 1875 / 1875, loss: 14.1850, time: 188.5651
+epoch: 6, test loss: 1.2671, time: 219.5629
+epoch: 6, batch: 375 / 1875, loss: 13.6476, time: 37.7044
+epoch: 6, batch: 750 / 1875, loss: 13.6511, time: 75.4018
+epoch: 6, batch: 1125 / 1875, loss: 13.6484, time: 113.1099
+epoch: 6, batch: 1500 / 1875, loss: 13.6700, time: 150.8013
+epoch: 6, batch: 1875 / 1875, loss: 13.6287, time: 188.4923
+epoch: 7, test loss: 1.5945, time: 222.0629
+epoch: 7, batch: 375 / 1875, loss: 13.0064, time: 37.7087
+epoch: 7, batch: 750 / 1875, loss: 13.0207, time: 75.4104
+epoch: 7, batch: 1125 / 1875, loss: 13.0131, time: 113.1062
+epoch: 7, batch: 1500 / 1875, loss: 13.0160, time: 150.8046
+epoch: 7, batch: 1875 / 1875, loss: 12.9822, time: 188.4873
+epoch: 8, test loss: 1.4992, time: 224.3858
+epoch: 8, batch: 375 / 1875, loss: 12.4072, time: 37.7889
+epoch: 8, batch: 750 / 1875, loss: 12.4097, time: 75.5434
+epoch: 8, batch: 1125 / 1875, loss: 12.3744, time: 113.2977
+epoch: 8, batch: 1500 / 1875, loss: 12.3819, time: 151.0654
+epoch: 8, batch: 1875 / 1875, loss: 12.3554, time: 188.8161
+epoch: 9, test loss: 1.1576, time: 228.3315
+epoch: 9, batch: 375 / 1875, loss: 11.8119, time: 37.7240
+epoch: 9, batch: 750 / 1875, loss: 11.8059, time: 75.4182
+epoch: 9, batch: 1125 / 1875, loss: 11.7419, time: 113.1295
+epoch: 9, batch: 1500 / 1875, loss: 11.7307, time: 150.8525
+epoch: 9, batch: 1875 / 1875, loss: 11.7060, time: 188.5428
+epoch: 10, test loss: 1.4366, time: 218.8023
+epoch: 10, batch: 375 / 1875, loss: 11.1820, time: 37.7131
+epoch: 10, batch: 750 / 1875, loss: 11.1804, time: 75.4171
+epoch: 10, batch: 1125 / 1875, loss: 11.1257, time: 113.1230
+epoch: 10, batch: 1500 / 1875, loss: 11.1225, time: 150.8188
+epoch: 10, batch: 1875 / 1875, loss: 11.0998, time: 188.5148
+epoch: 11, test loss: 1.3512, time: 223.3095
+epoch: 11, batch: 375 / 1875, loss: 10.5244, time: 37.6937
+epoch: 11, batch: 750 / 1875, loss: 10.5222, time: 75.3627
+epoch: 11, batch: 1125 / 1875, loss: 10.4879, time: 113.0423
+epoch: 11, batch: 1500 / 1875, loss: 10.4757, time: 150.7205
+epoch: 11, batch: 1875 / 1875, loss: 10.4488, time: 188.3961
+epoch: 12, test loss: 1.2267, time: 226.9250
+epoch: 12, batch: 375 / 1875, loss: 9.9832, time: 37.6839
+epoch: 12, batch: 750 / 1875, loss: 9.9460, time: 75.3547
+epoch: 12, batch: 1125 / 1875, loss: 9.8934, time: 113.0390
+epoch: 12, batch: 1500 / 1875, loss: 9.8939, time: 150.7392
+epoch: 12, batch: 1875 / 1875, loss: 9.8660, time: 188.4513
+epoch: 13, test loss: 1.1241, time: 221.6296
+epoch: 13, batch: 375 / 1875, loss: 9.4638, time: 37.7281
+epoch: 13, batch: 750 / 1875, loss: 9.4218, time: 75.4926
+epoch: 13, batch: 1125 / 1875, loss: 9.3802, time: 113.2690
+epoch: 13, batch: 1500 / 1875, loss: 9.3655, time: 151.0611
+epoch: 13, batch: 1875 / 1875, loss: 9.3580, time: 188.8165
+epoch: 14, test loss: 1.1532, time: 221.2494
+epoch: 14, batch: 375 / 1875, loss: 8.9780, time: 37.7616
+epoch: 14, batch: 750 / 1875, loss: 8.9126, time: 75.5145
+epoch: 14, batch: 1125 / 1875, loss: 8.8770, time: 113.2643
+epoch: 14, batch: 1500 / 1875, loss: 8.8737, time: 150.9995
+epoch: 14, batch: 1875 / 1875, loss: 8.8499, time: 188.7653
+epoch: 15, test loss: 1.0816, time: 226.7203
+epoch: 15, batch: 375 / 1875, loss: 8.4887, time: 37.7797
+epoch: 15, batch: 750 / 1875, loss: 8.4311, time: 75.5588
+epoch: 15, batch: 1125 / 1875, loss: 8.3863, time: 113.3236
+epoch: 15, batch: 1500 / 1875, loss: 8.3838, time: 151.0781
+epoch: 15, batch: 1875 / 1875, loss: 8.3670, time: 188.8618
+epoch: 16, test loss: 1.4844, time: 229.2741
+epoch: 16, batch: 375 / 1875, loss: 8.0128, time: 37.8016
+epoch: 16, batch: 750 / 1875, loss: 7.9905, time: 75.5544
+epoch: 16, batch: 1125 / 1875, loss: 7.9617, time: 113.3044
+epoch: 16, batch: 1500 / 1875, loss: 7.9715, time: 151.0359
+epoch: 16, batch: 1875 / 1875, loss: 7.9542, time: 188.7770
+epoch: 17, test loss: 1.7891, time: 225.1311
+epoch: 17, batch: 375 / 1875, loss: 7.6247, time: 37.7419
+epoch: 17, batch: 750 / 1875, loss: 7.5995, time: 75.4765
+epoch: 17, batch: 1125 / 1875, loss: 7.5604, time: 113.2825
+epoch: 17, batch: 1500 / 1875, loss: 7.5612, time: 151.0857
+epoch: 17, batch: 1875 / 1875, loss: 7.5469, time: 188.8973
+epoch: 18, test loss: 1.5897, time: 229.0345
+epoch: 18, batch: 375 / 1875, loss: 7.2280, time: 37.7211
+epoch: 18, batch: 750 / 1875, loss: 7.2170, time: 75.4251
+epoch: 18, batch: 1125 / 1875, loss: 7.1930, time: 113.1131
+epoch: 18, batch: 1500 / 1875, loss: 7.2018, time: 150.8188
+epoch: 18, batch: 1875 / 1875, loss: 7.1811, time: 188.5402
+epoch: 19, test loss: 1.4600, time: 227.5802
+epoch: 19, batch: 375 / 1875, loss: 6.8707, time: 37.7243
+epoch: 19, batch: 750 / 1875, loss: 6.8480, time: 75.4433
+epoch: 19, batch: 1125 / 1875, loss: 6.8354, time: 113.1430
+epoch: 19, batch: 1500 / 1875, loss: 6.8450, time: 150.8881
+epoch: 19, batch: 1875 / 1875, loss: 6.8414, time: 188.6944
+epoch: 20, test loss: 1.5931, time: 223.1350

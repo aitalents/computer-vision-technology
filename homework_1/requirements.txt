@@ -1,0 +1,11 @@
+torch
+torchvision
+numpy
+pandas
+thop
+tqdm
+fiftyone
+opencv-python
+matplotlib
+json
+IPython
