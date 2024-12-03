@@ -1,0 +1,5 @@
+torch==2.3.0+cu118
+torchvision==0.18.0+cu118
+pyyaml==6.0.1
+
+
