@@ -62,6 +62,6 @@
 
 - [Владимир Фоменко](https://github.com/Vlako)
 - [Артур Идятов](https://github.com/electriclizard)
-- [Владимир Штурмин]()
+- [Владимир Штурмин](https://github.com/vshturmin)
 - [Людмила Васильева](https://github.com/thegoldenbeetle)
 - [Дмитрий Гайфуллин](https://github.com/dmg-ai)
