@@ -49,7 +49,7 @@
     
     4 Object detection, Semantic Segmentation and Object tracking
     
-    5 Video processing and 
+    5 Video processing and model inference
 
     6 Pose estimation and Action Recognition
 
@@ -65,3 +65,4 @@
 - [Владимир Штурмин](https://github.com/vshturmin)
 - [Людмила Васильева](https://github.com/thegoldenbeetle)
 - [Дмитрий Гайфуллин](https://github.com/dmg-ai)
+- [Емельян Бурыкин](https://github.com/Emelian)
