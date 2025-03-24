@@ -2,6 +2,8 @@
 
 [Презентация](https://docs.google.com/presentation/d/1Drzq84dRQWp9sWBWz3m6RuWTDQgsT2lcZhu0oClQutM/edit?usp=sharing)
 
+[Домашнее задание](Homework.md)
+
 ## Статьи
 
 * [Графовая сегментация](https://cs.brown.edu/people/pfelzens/papers/seg-ijcv.pdf)
